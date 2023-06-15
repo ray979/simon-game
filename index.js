@@ -43,14 +43,13 @@ $(".btn").on("click", function(event) {
             },200);
 
             gameStarted = false;
-            gameLevel = -1;
         }
     }
 });
 
 //next level
 function nextSequence(){
-    if(gameLevel != -1){
+    if(gameStarted){
         userButtonSequence = [];
         $("#level-title").text("Level " + ++gameLevel);
         let randomButton = Math.floor(Math.random() * 4);
