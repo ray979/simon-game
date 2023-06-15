@@ -1,6 +1,10 @@
 # Summary
 The Simon game.
 
+06/15/2023:
+Fixed issue where double click at end of current sequence/level should be game over, but the level still changes after game over 
+effect.
+
 # Technologies used
 * HTML
 * CSS
