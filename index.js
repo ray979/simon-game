@@ -9,7 +9,8 @@ const buttonColors = ["green", "red", "yellow", "blue"];
 let gameLevel = 0;
 let gameStarted = false;
 
-$(document).on("keypress", function(event){
+//init game
+$(document).on("keypress", function(){
     if(gameStarted === false){
         gameStarted = true;
         buttonSequence = [];
@@ -19,6 +20,7 @@ $(document).on("keypress", function(event){
     }
 });
 
+//check user button press
 $(".btn").on("click", function() {
     if(gameStarted){
         var buttonColor = $(this).attr("id");
@@ -27,26 +29,27 @@ $(".btn").on("click", function() {
         if(buttonColor === buttonSequence[userButtonSequence.length-1]){
             playSound(buttonColor);
             if(userButtonSequence.length == buttonSequence.length){
-                userButtonSequence = [];
                 setTimeout(nextSequence, 1000);
             }
         }
         else{
-            gameStarted = false;
-            gameLevel = 0;
-            playSound("wrong");
             $("#level-title").text("Game Over, Press Any Key to Restart");
+            playSound("wrong");
             $("body").addClass("game-over");
             setTimeout(function(){
                 $("body").removeClass("game-over");
             },200);
+
+            gameStarted = false;
         }
 
 
     }
 });
 
+//next level
 function nextSequence(){
+    userButtonSequence = [];
     $("#level-title").text("Level " + ++gameLevel);
     let randomButton = Math.floor(Math.random() * 4);
     buttonSequence.push(buttonColors[randomButton]);
