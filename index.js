@@ -21,15 +21,17 @@ $(document).on("keypress", function(){
 });
 
 //check user button press
-$(".btn").on("click", function() {
+$(".btn").on("click", function(event) {
     if(gameStarted){
         var buttonColor = $(this).attr("id");
         animateButton(buttonColor);
         userButtonSequence.push(buttonColor);
-        if(buttonColor === buttonSequence[userButtonSequence.length-1]){
+        if(userButtonSequence[userButtonSequence.length-1] === buttonSequence[userButtonSequence.length-1]){
             playSound(buttonColor);
             if(userButtonSequence.length == buttonSequence.length){
-                setTimeout(nextSequence, 1000);
+                setTimeout(() => {
+                    nextSequence(); 
+                }, 1000);
             }
         }
         else{
@@ -41,20 +43,21 @@ $(".btn").on("click", function() {
             },200);
 
             gameStarted = false;
+            gameLevel = -1;
         }
-
-
     }
 });
 
 //next level
 function nextSequence(){
-    userButtonSequence = [];
-    $("#level-title").text("Level " + ++gameLevel);
-    let randomButton = Math.floor(Math.random() * 4);
-    buttonSequence.push(buttonColors[randomButton]);
-    flashButton(randomButton);
-    playSound(buttonColors[randomButton]);
+    if(gameLevel != -1){
+        userButtonSequence = [];
+        $("#level-title").text("Level " + ++gameLevel);
+        let randomButton = Math.floor(Math.random() * 4);
+        buttonSequence.push(buttonColors[randomButton]);
+        flashButton(randomButton);
+        playSound(buttonColors[randomButton]);
+    }
 }
 
 function playSound(fileName){
